@@ -1,0 +1,21 @@
+<svg
+  class="bookmark-icon"
+  viewBox="0 0 24 24"
+
+  role="button"
+  tabindex="0"
+
+  [attr.aria-pressed]="filled"
+  [attr.aria-label]="filled ? 'Remove bookmark' : 'Add bookmark'"
+
+  (click)="toggle()"
+  (keydown)="handleKeydown($event)"
+
+  [attr.fill]="filled ? 'currentColor' : 'none'"
+  [attr.stroke]="filled ? 'none' : 'currentColor'"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+</svg>

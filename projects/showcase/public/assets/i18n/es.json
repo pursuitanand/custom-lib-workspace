@@ -1,0 +1,10 @@
+{
+  "validation": {
+    "required": "Este campo es obligatorio",
+    "minDate": "Fecha demasiado temprana",
+    "maxDate": "Fecha demasiado tardía"
+  },
+  "calendar": {
+    "label": "Seleccionar fecha"
+  }
+}

@@ -1,0 +1,62 @@
+<button (click)="switchLang('en')">EN</button>
+<button (click)="switchLang('es')">ES</button>
+<p-accordion>
+    <p-accordionTab header="Integration Showcase">
+        <form [formGroup]="form">
+        <lib-custom-calendar formControlName="date1"
+        label="calendar.label" size="md"
+        [required]="true"
+        [showTime]="true"></lib-custom-calendar>
+        </form>
+        <p>Selected: {{ form.value | json }}</p>
+        <!-- <lib-custom-calendar [date]="date1" placeholder="Select a date"></lib-custom-calendar> -->
+    </p-accordionTab>
+    <p-accordionTab header="Bookmark Icon">
+        <div class="bookmark-demo">
+
+            <h4>Static states</h4>
+            <div class="bookmark-demo__row">
+                <div class="bookmark-demo__item">
+                    <lib-bookmark-icon [filled]="false" />
+                    <span>Outline (pi-bookmark)</span>
+                </div>
+                <div class="bookmark-demo__item">
+                    <lib-bookmark-icon [filled]="true" />
+                    <span>Filled (pi-bookmark-fill)</span>
+                </div>
+            </div>
+
+            <h4>Toggle — click or press Enter / Space</h4>
+            <div class="bookmark-demo__row">
+                <div *ngFor="let item of bookmarkStates" class="bookmark-demo__item">
+                    <lib-bookmark-icon
+                        [filled]="item.filled"
+                        [ariaLabel]="(item.filled ? 'Remove bookmark: ' : 'Add bookmark: ') + item.label"
+                        (bookmarkChange)="item.filled = $event"
+                    />
+                    <span>{{ item.label }}</span>
+                    <small>{{ item.filled ? 'Add Bookmark' : 'Remove Bookmark' }}</small>
+                </div>
+            </div>
+
+            <h4>Color variants</h4>
+            <div class="bookmark-demo__row">
+                <lib-bookmark-icon [filled]="false" style="color: #e74c3c;" />
+                <lib-bookmark-icon [filled]="true"  style="color: #e74c3c;" />
+                <lib-bookmark-icon [filled]="false" style="color: #2ecc71;" />
+                <lib-bookmark-icon [filled]="true"  style="color: #2ecc71;" />
+                <lib-bookmark-icon [filled]="false" style="color: #3498db;" />
+                <lib-bookmark-icon [filled]="true"  style="color: #3498db;" />
+            </div>
+
+            <h4>Size variants</h4>
+            <div class="bookmark-demo__row bookmark-demo__row--align-center">
+                <lib-bookmark-icon [filled]="true" style="width: 1rem;  height: 1rem;"  />
+                <lib-bookmark-icon [filled]="true" style="width: 1.5rem; height: 1.5rem;" />
+                <lib-bookmark-icon [filled]="true" style="width: 2rem;  height: 2rem;"  />
+                <lib-bookmark-icon [filled]="true" style="width: 3rem;  height: 3rem;"  />
+            </div>
+
+        </div>
+    </p-accordionTab>
+</p-accordion>

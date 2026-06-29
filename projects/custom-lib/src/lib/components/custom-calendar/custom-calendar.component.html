@@ -1,0 +1,56 @@
+<div class="calendar-wrapper">
+
+  <label *ngIf="label">
+    {{ label | transloco }}
+    <span *ngIf="required">*</span>
+  </label>
+
+  <p-calendar
+    [ngModel]="value"
+    (ngModelChange)="onValueChange($event)"
+    (onBlur)="onTouched()"
+
+    [id]="id"
+    [name]="name"
+    [placeholder]="placeholder | transloco"
+    [style.width]="computedWidth"
+    [locale]="locale"
+
+    [disabled]="isDisabled"
+    [showIcon]="showIcon"
+    [showTime]="showTime"
+    [hourFormat]="hourFormat"
+    [dateFormat]="dateFormat"
+    [inline]="inline"
+
+    [selectionMode]="selectionMode"
+    [minDate]="minDate"
+    [maxDate]="maxDate"
+
+    [showButtonBar]="showButtonBar"
+    [showOnFocus]="showOnFocus"
+    [touchUI]="touchUI"
+    [appendTo]="appendTo"
+  >
+  </p-calendar>
+
+  <!-- ERRORS (FROM PARENT FORM CONTROL) -->
+  <ng-container *ngIf="isInvalid()">
+    <div class="error" *ngIf="isInvalid()">
+
+      <small *ngIf="hasError('required')">
+        {{ requiredMessage | transloco }}
+      </small>
+
+      <small *ngIf="hasError('minDate')">
+        {{ minDateMessage | transloco }}
+      </small>
+
+      <small *ngIf="hasError('maxDate')">
+        {{ maxDateMessage | transloco }}
+      </small>
+
+    </div>
+  </ng-container>
+
+</div>

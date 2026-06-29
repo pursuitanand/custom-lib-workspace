@@ -1,0 +1,28 @@
+<svg
+  class="lib-bookmark-icon"
+  [class.lib-bookmark-icon--filled]="filled"
+  viewBox="0 0 24 24"
+  xmlns="http://www.w3.org/2000/svg"
+  role="button"
+  tabindex="0"
+  [attr.aria-pressed]="filled"
+  [attr.aria-label]="computedAriaLabel"
+  (click)="toggle()"
+  (keydown)="onKeydown($event)"
+>
+  <title>{{ computedAriaLabel }}</title>
+
+  <!-- Outline bookmark (visible when not filled) -->
+  <path
+    *ngIf="!filled"
+    class="lib-bookmark-icon__outline"
+    d="M5 3h14a1 1 0 0 1 1 1v17.438a.5.5 0 0 1-.8.4L12 17.7l-7.2 4.138A.5.5 0 0 1 4 21.438V4a1 1 0 0 1 1-1z"
+  />
+
+  <!-- Filled bookmark (visible when filled) -->
+  <path
+    *ngIf="filled"
+    class="lib-bookmark-icon__filled"
+    d="M5 3h14a1 1 0 0 1 1 1v17.438a.5.5 0 0 1-.8.4L12 17.7l-7.2 4.138A.5.5 0 0 1 4 21.438V4a1 1 0 0 1 1-1z"
+  />
+</svg>

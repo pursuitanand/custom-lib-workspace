@@ -1,0 +1,43 @@
+.lib-bookmark-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+  color: inherit;
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  outline: none;
+}
+
+/* Outline state */
+.lib-bookmark-icon__outline {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+/* Filled state */
+.lib-bookmark-icon__filled {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* Hover */
+.lib-bookmark-icon:hover {
+  transform: scale(1.12);
+  opacity: 0.85;
+}
+
+/* Focus ring — only for keyboard navigation, not mouse clicks */
+.lib-bookmark-icon:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Press feedback */
+.lib-bookmark-icon:active {
+  transform: scale(0.92);
+}

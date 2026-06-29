@@ -1,0 +1,10 @@
+{
+  "validation": {
+    "required": "This field is required",
+    "minDate": "Date is too early",
+    "maxDate": "Date is too late"
+  },
+  "calendar": {
+    "label": "Select date"
+  }
+}
