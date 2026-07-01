@@ -109,6 +109,10 @@ Zero-dependency SVG bookmark icon. Drop-in equivalent to PrimeIcons `pi-bookmark
 Inputs: `filled: boolean`, `ariaLabel?: string`  
 Output: `bookmarkChange: EventEmitter<boolean>`
 
+## Changelog
+
+- **2026-06-30** — Added `lib-bookmark-icon` component (SVG bookmark, fully accessible, zero dependencies).
+
 ## Scaffold commands used
 
 ```bash
