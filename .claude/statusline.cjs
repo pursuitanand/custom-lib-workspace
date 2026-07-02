@@ -3,6 +3,7 @@
  * Claude Code status line for custom-lib-workspace.
  *
  * Displays: model display name  |  context usage progress bar + percentage
+ *           |  session cost  |  session duration
  *
  * Runs under Node.js so it behaves identically whether Claude Code invokes it
  * from PowerShell, cmd.exe, or Git Bash on Windows.
@@ -29,6 +30,13 @@ function buildBar(usedPct, width) {
   const filledCount = Math.round((clamped / 100) * width);
   const emptyCount = width - filledCount;
   return '█'.repeat(filledCount) + '░'.repeat(emptyCount);
+}
+
+function formatDuration(ms) {
+  const totalSec = Math.floor(ms / 1000);
+  const mins = Math.floor(totalSec / 60);
+  const secs = totalSec % 60;
+  return `${mins}m ${secs}s`;
 }
 
 (async () => {
@@ -72,10 +80,19 @@ function buildBar(usedPct, width) {
     else if (usedPct >= 50) barColor = yellow;
   }
 
+  const cost = (input.cost && input.cost.total_cost_usd) || 0;
+  const durationMs = (input.cost && input.cost.total_duration_ms) || 0;
+  const costSegment = `$${cost.toFixed(2)}`;
+  const durationSegment = formatDuration(durationMs);
+
   const line =
     `${cyan}${modelName}${reset}` +
     `${dim} | ${reset}` +
-    `${barColor}${contextSegment}${reset}`;
+    `${barColor}${contextSegment}${reset}` +
+    `${dim} | ${reset}` +
+    `${yellow}${costSegment}${reset}` +
+    `${dim} | ${reset}` +
+    `${cyan}${durationSegment}${reset}`;
 
   process.stdout.write(line + '\n');
 })();
