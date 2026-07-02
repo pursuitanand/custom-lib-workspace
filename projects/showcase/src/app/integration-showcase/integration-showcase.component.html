@@ -26,16 +26,17 @@
                 </div>
             </div>
 
-            <h4>Toggle — click or press Enter / Space</h4>
+            <h4>Toggle — click or press Enter / Space (filled only after backend call succeeds)</h4>
             <div class="bookmark-demo__row">
                 <div *ngFor="let item of bookmarkStates" class="bookmark-demo__item">
                     <lib-bookmark-icon
                         [filled]="item.filled"
+                        [loading]="item.saving"
                         [ariaLabel]="(item.filled ? 'Remove bookmark: ' : 'Add bookmark: ') + item.label"
-                        (bookmarkChange)="item.filled = $event"
+                        (toggleRequested)="onBookmarkToggleRequested(item, $event)"
                     />
                     <span>{{ item.label }}</span>
-                    <small>{{ item.filled ? 'Add Bookmark' : 'Remove Bookmark' }}</small>
+                    <small>{{ item.saving ? 'Saving…' : (item.filled ? 'Add Bookmark' : 'Remove Bookmark') }}</small>
                 </div>
             </div>
 

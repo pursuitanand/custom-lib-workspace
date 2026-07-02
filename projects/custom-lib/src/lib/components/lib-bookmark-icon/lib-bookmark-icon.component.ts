@@ -9,7 +9,15 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class LibBookmarkIconComponent {
   @Input() filled = false;
   @Input() ariaLabel?: string;
-  @Output() bookmarkChange = new EventEmitter<boolean>();
+  /** Disables interaction while a consumer's backend call is in flight. */
+  @Input() loading = false;
+
+  /**
+   * Emits the intended new filled state when the user requests a toggle.
+   * `filled` itself is not changed here — the consumer should only update
+   * the `filled` input once its backend call for this request succeeds.
+   */
+  @Output() toggleRequested = new EventEmitter<boolean>();
 
   get computedAriaLabel(): string {
     if (this.ariaLabel) return this.ariaLabel;
@@ -17,8 +25,10 @@ export class LibBookmarkIconComponent {
   }
 
   toggle(): void {
-    this.filled = !this.filled;
-    this.bookmarkChange.emit(this.filled);
+    if (this.loading) {
+      return;
+    }
+    this.toggleRequested.emit(!this.filled);
   }
 
   onKeydown(event: KeyboardEvent): void {

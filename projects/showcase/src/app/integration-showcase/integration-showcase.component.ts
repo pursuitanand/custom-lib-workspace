@@ -29,11 +29,31 @@ export class IntegrationShowcaseComponent implements OnInit{
 
   form!: FormGroup;
 
-  bookmarkStates: { label: string; filled: boolean }[] = [
-    { label: 'Article: Angular Tips', filled: false },
-    { label: 'Article: RxJS Patterns', filled: true },
-    { label: 'Article: CSS Grid Guide', filled: false },
+  bookmarkStates: { label: string; filled: boolean; saving: boolean }[] = [
+    { label: 'Article: Angular Tips', filled: false, saving: false },
+    { label: 'Article: RxJS Patterns', filled: true, saving: false },
+    { label: 'Article: CSS Grid Guide', filled: false, saving: false },
   ];
+
+  /**
+   * Demo-only stand-in for a backend call. Fails ~30% of the time so the
+   * showcase demonstrates that `filled` only flips on success.
+   */
+  private simulateBookmarkApiCall(): Promise<boolean> {
+    return new Promise(resolve => {
+      setTimeout(() => resolve(Math.random() > 0.3), 600);
+    });
+  }
+
+  onBookmarkToggleRequested(item: { label: string; filled: boolean; saving: boolean }, next: boolean): void {
+    item.saving = true;
+    this.simulateBookmarkApiCall().then(success => {
+      item.saving = false;
+      if (success) {
+        item.filled = next;
+      }
+    });
+  }
 
   ngOnInit() {
     this.form = new FormGroup({

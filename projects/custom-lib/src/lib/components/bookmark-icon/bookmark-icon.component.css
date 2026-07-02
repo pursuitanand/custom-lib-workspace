@@ -23,3 +23,10 @@
 .bookmark-icon:active {
   transform: scale(0.95);
 }
+
+/* Pending state while a consumer's backend call is in flight */
+.bookmark-icon--loading {
+  cursor: default;
+  opacity: 0.5;
+  pointer-events: none;
+}

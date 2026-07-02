@@ -41,3 +41,10 @@
 .lib-bookmark-icon:active {
   transform: scale(0.92);
 }
+
+/* Pending state while a consumer's backend call is in flight */
+.lib-bookmark-icon--loading {
+  cursor: default;
+  opacity: 0.5;
+  pointer-events: none;
+}
