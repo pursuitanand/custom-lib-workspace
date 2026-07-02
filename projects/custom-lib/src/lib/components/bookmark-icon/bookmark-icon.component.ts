@@ -8,11 +8,21 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class BookmarkIconComponent {
 
   @Input() filled = false;
-  @Output() filledChange = new EventEmitter<boolean>();
+  /** Disables interaction while a consumer's backend call is in flight. */
+  @Input() loading = false;
+
+  /**
+   * Emits the intended new filled state when the user requests a toggle.
+   * `filled` itself is not changed here — the consumer should only update
+   * the `filled` input once its backend call for this request succeeds.
+   */
+  @Output() toggleRequested = new EventEmitter<boolean>();
 
   toggle(): void {
-    this.filled = !this.filled;
-    this.filledChange.emit(this.filled);
+    if (this.loading) {
+      return;
+    }
+    this.toggleRequested.emit(!this.filled);
   }
 
   handleKeydown(event: KeyboardEvent): void {

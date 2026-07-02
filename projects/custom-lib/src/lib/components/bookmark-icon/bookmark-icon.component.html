@@ -1,9 +1,12 @@
 <svg
   class="bookmark-icon"
+  [class.bookmark-icon--loading]="loading"
   viewBox="0 0 24 24"
 
   role="button"
-  tabindex="0"
+  [attr.tabindex]="loading ? -1 : 0"
+  [attr.aria-disabled]="loading"
+  [attr.aria-busy]="loading"
 
   [attr.aria-pressed]="filled"
   [attr.aria-label]="filled ? 'Remove bookmark' : 'Add bookmark'"

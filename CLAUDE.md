@@ -57,21 +57,35 @@ Every new component **must** be added there and to `CustomLibModule` (declaratio
 - **File:** `projects/custom-lib/src/lib/components/lib-bookmark-icon/`
 - **Purpose:** Zero-dependency SVG bookmark icon. Equivalent to PrimeIcons `pi-bookmark` / `pi-bookmark-fill` but built from scratch.
 - **Inputs:**
-  - `filled: boolean` (default `false`) — outline vs filled state
+  - `filled: boolean` (default `false`) — outline vs filled state; parent-controlled (see below)
   - `ariaLabel?: string` — overrides auto-generated label ("Add bookmark" / "Remove bookmark")
+  - `loading: boolean` (default `false`) — disables interaction while a consumer's backend call is in flight
 - **Outputs:**
-  - `bookmarkChange: EventEmitter<boolean>` — emits the new filled state after toggle
-- **Accessibility:** `role="button"`, `tabindex="0"`, `aria-pressed`, SVG `<title>`, keyboard support (Enter / Space), `:focus-visible` ring
+  - `toggleRequested: EventEmitter<boolean>` — emits the *intended* new filled state when the user requests a toggle. The component does **not** flip `filled` itself; the consumer should perform its backend call and only update the `filled` input once that call succeeds (leave it unchanged on failure).
+- **Accessibility:** `role="button"`, `tabindex="0"` (`-1` while `loading`), `aria-pressed`, `aria-busy`/`aria-disabled` while `loading`, SVG `<title>`, keyboard support (Enter / Space), `:focus-visible` ring
 - **Styling:** inherits `color` from the parent — set `color` CSS to change both stroke and fill. Size is controlled via CSS `width`/`height` on the host element.
 
 ```html
-<!-- Basic toggle -->
-<lib-bookmark-icon [filled]="isSaved" (bookmarkChange)="isSaved = $event" />
+<!-- Toggle confirmed only after the backend call succeeds -->
+<lib-bookmark-icon
+  [filled]="isSaved"
+  [loading]="isSaving"
+  (toggleRequested)="onToggleRequested($event)"
+/>
+```
 
-<!-- Custom label -->
-<lib-bookmark-icon [filled]="isSaved" ariaLabel="Save this article" (bookmarkChange)="isSaved = $event" />
+```ts
+onToggleRequested(next: boolean): void {
+  this.isSaving = true;
+  this.bookmarkApi.setBookmark(next).subscribe({
+    next: () => { this.isSaved = next; this.isSaving = false; },
+    error: () => { this.isSaving = false; } // filled stays unchanged on failure
+  });
+}
+```
 
-<!-- Custom color and size -->
+```html
+<!-- Custom color and size (static, no backend interaction) -->
 <lib-bookmark-icon [filled]="true" style="color: #e74c3c; width: 2rem; height: 2rem;" />
 ```
 
